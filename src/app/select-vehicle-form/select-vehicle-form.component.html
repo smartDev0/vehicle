@@ -4,10 +4,11 @@
   <form [formGroup]="selectVehicleForm">
 
     <select
-      formControlName="year"
+      formControlName="manufacturer_id"
+      (change)="onChange()"
     >
-      <option default disabled value>Year</option>
-      <option *ngFor="let option of yearOptions" [value]="option">{{option}}</option>
+      <option default disabled value>Manufacturer</option>
+      <option *ngFor="let option of manufacturerOptions" [value]="option.id" >{{option.name}}</option>
     </select>
 
 

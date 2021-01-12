@@ -1,4 +1,3 @@
-
 import {
   Component,
   OnInit,
@@ -7,7 +6,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { ApiService } from './../service/api.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-select-vehicle-form',
@@ -15,9 +15,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   styleUrls: ['./select-vehicle-form.component.scss'],
 })
 export class SelectVehicleFormComponent implements OnInit {
-  public selectVehicleForm: FormGroup ;
+  public selectVehicleForm: FormGroup;
 
-  public yearOptions: any = [];
+  public manufacturerOptions: any = [];
   public makeOptions: any = [];
   public modelOptions: any = [];
   // public trimOptions: Array<any>;
@@ -25,43 +25,32 @@ export class SelectVehicleFormComponent implements OnInit {
   public loadingMakes: boolean = false;
   public loadingModels: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private apiService: ApiService
+  ) {
     this.selectVehicleForm = this.formBuilder.group({
-      year: ["",
-        Validators.required,
-      ],
+      manufacturer_id: ['', Validators.required],
     });
-    this.yearOptions = [
-      2021,
-      2020,
-      2019,
-      2018,
-      2017,
-      2016,
-      2015,
-      2014,
-      2013,
-      2012,
-      2011,
-      2010,
-      2009,
-      2008,
-      2007,
-      2006,
-      2005,
-      2004,
-      2003,
-      2002,
-      2001,
-      2000,
-      1999,
-      1998,
-      1997,
-      1996,
-      1995,
-      1994,
-    ];
+    this.apiService
+      .getAll()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({
+            id: c.payload.doc.id,
+            ...c.payload.doc.data(),
+          }))
+        )
+      )
+      .subscribe((data) => {
+        this.manufacturerOptions = data;
+        console.log(data);
+      });
   }
 
   ngOnInit(): void {}
+  onChange() {
+    console.log(this.selectVehicleForm.value);
+  }
 }
