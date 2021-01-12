@@ -67,9 +67,18 @@ export class SelectVehicleFormComponent implements OnInit {
       .subscribe((data) => {
         this.modelOptions = data;
       });
+    this.variantOptions = [];
+    this.chassisOptions = [];
+    this.yearOptions = [];
+    this.selectVehicleForm.setValue({
+      manufacturer_id:this.selectVehicleForm.value.manufacturer_id,
+      model_id: '',
+      variant_id: '',
+      chassis_id: '',
+      year_id:""
+    });
   }
   onModelChange() {
-    console.log(this.selectVehicleForm.value);
     this.apiService
       .getVariantAll(
         this.selectVehicleForm.value.manufacturer_id,
@@ -86,8 +95,16 @@ export class SelectVehicleFormComponent implements OnInit {
       )
       .subscribe((data) => {
         this.variantOptions = data;
-        console.log(data);
       });
+    this.chassisOptions = [];
+    this.yearOptions = [];
+    this.selectVehicleForm.setValue({
+      manufacturer_id: this.selectVehicleForm.value.manufacturer_id,
+      model_id: this.selectVehicleForm.value.model_id,
+      variant_id: '',
+      chassis_id: '',
+      year_id: '',
+    });
   }
   onVariantChange() {
     this.apiService
@@ -107,8 +124,15 @@ export class SelectVehicleFormComponent implements OnInit {
       )
       .subscribe((data) => {
         this.chassisOptions = data;
-        console.log(data);
       });
+    this.yearOptions = [];
+    this.selectVehicleForm.setValue({
+      manufacturer_id: this.selectVehicleForm.value.manufacturer_id,
+      model_id: this.selectVehicleForm.value.model_id,
+      variant_id: this.selectVehicleForm.value.variant_id,
+      chassis_id: '',
+      year_id: '',
+    });
   }
   onChassisChange() {
     this.apiService
@@ -129,7 +153,13 @@ export class SelectVehicleFormComponent implements OnInit {
       )
       .subscribe((data) => {
         this.yearOptions = data;
-        console.log(data);
       });
+    this.selectVehicleForm.setValue({
+      manufacturer_id: this.selectVehicleForm.value.manufacturer_id,
+      model_id: this.selectVehicleForm.value.model_id,
+      variant_id: this.selectVehicleForm.value.variant_id,
+      chassis_id: this.selectVehicleForm.value.chassis_id,
+      year_id: '',
+    });
   }
 }
