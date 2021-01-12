@@ -1,0 +1,16 @@
+<main class='vehicle-form-container'>
+
+
+  <form [formGroup]="selectVehicleForm">
+
+    <select
+      formControlName="year"
+    >
+      <option default disabled value>Year</option>
+      <option *ngFor="let option of yearOptions" [value]="option">{{option}}</option>
+    </select>
+
+
+  </form>
+
+</main>
