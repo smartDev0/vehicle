@@ -10,6 +10,35 @@
       <option default disabled value>Manufacturer</option>
       <option *ngFor="let option of manufacturerOptions" [value]="option.id" >{{option.name}}</option>
     </select>
+    <select
+      formControlName="model_id"
+      (change)="onModelChange()"
+    >
+      <option default disabled value>Model</option>
+      <option *ngFor="let option of modelOptions" [value]="option.id" >{{option.name}}</option>
+    </select>
+
+    <select
+      formControlName="variant_id"
+      (change)="onVariantChange()"
+    >
+      <option default disabled value>Variant</option>
+      <option *ngFor="let option of variantOptions" [value]="option.id" >{{option.name}}</option>
+    </select>
+    <select
+      formControlName="chassis_id"
+      (change)="onChassisChange()"
+    >
+      <option default disabled value>Chassis</option>
+      <option *ngFor="let option of chassisOptions" [value]="option.id" >{{option.name}}</option>
+    </select>
+    <select
+      formControlName="year_id"
+    >
+      <option default disabled value>Year</option>
+      <option *ngFor="let option of yearOptions" [value]="option.id" >{{option.name}}</option>
+    </select>
+
 
 
   </form>
